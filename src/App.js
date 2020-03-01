@@ -6,9 +6,6 @@ import { Map, TileLayer } from "react-leaflet";
 function App() {
   const [message, setMessage] = useState("");
   const [date, setDate] = useState("");
-  const [dummy, setDummy] = useState(
-    ">REV002094079268+1101823-0748084300005032;ID=357042062905642<"
-  );
 
   const [color, setColor] = useState("black");
   const plusSign = message.indexOf("+");
@@ -28,23 +25,25 @@ function App() {
     const numWeeks = parseInt(dummy.substring(6, 10));
     const numSeconds = parseInt(dummy.substring(11, 16));
     const numWeeksMilli = numWeeks * 7 * 24 * 60 * 60 * 1000;
-    console.log(numSeconds * 1000 + numWeeksMilli + janTimeMilli);
+    const time = numSeconds * 1000 + numWeeksMilli + janTimeMilli;
+    const time1 = new Date(time).toString();
+    setDate(time1);
   };
 
   useEffect(() => {
     getInfo();
     setInterval(() => {
       getInfo();
-    }, 1000);
+    }, 10000);
   }, []);
 
   useEffect(() => {
     setColor(color === "blue" ? "black" : "blue");
-    decomposeTime(dummy); // cambiar a message
+    decomposeTime(message); // cambiar a message
   }, [message]);
 
   const getInfo = () => {
-    fetch("http://localhost:5000/coords")
+    fetch("http://0590b5fc.ngrok.io/coords")
       .then(res => res.json())
       .then(data => {
         if (message !== data) {
@@ -57,12 +56,9 @@ function App() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vw" }}>
       <div style={{ color: color, fontWeight: "bolder" }}>{message}</div>
-      <div style={{ color: color, fontWeight: "bolder" }}>
-        Latitud: {latitud}
-      </div>
-      <div style={{ color: color, fontWeight: "bolder" }}>
-        Longitud: {longitud}
-      </div>
+      <div style={{ color: color, fontWeight: "bolder" }}>Lati: {latitud}</div>
+      <div style={{ color: color, fontWeight: "bolder" }}>Long: {longitud}</div>
+      <div style={{ color: color, fontWeight: "bolder" }}>Fecha: {date}</div>
       <div className="dive">
         <Map className="map" center={[11.018946, -74.850515]} zoom={15}>
           <TileLayer
