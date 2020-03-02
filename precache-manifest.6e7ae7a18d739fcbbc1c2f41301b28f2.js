@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "85142ecef7539f4240e3643a384281b1",
+    "revision": "aa5b73992195171ab0efaafa79a0e361",
     "url": "/Diseno-Electronico/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Diseno-Electronico/static/css/2.b756e824.chunk.css"
   },
   {
-    "revision": "6627a222dccc30fa5420",
+    "revision": "133e925f54e74426e429",
     "url": "/Diseno-Electronico/static/css/main.f975c4fd.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Diseno-Electronico/static/js/2.af1a9d17.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6627a222dccc30fa5420",
-    "url": "/Diseno-Electronico/static/js/main.1c73c362.chunk.js"
+    "revision": "133e925f54e74426e429",
+    "url": "/Diseno-Electronico/static/js/main.e371a888.chunk.js"
   },
   {
     "revision": "083e3caa6b45d7601e35",
