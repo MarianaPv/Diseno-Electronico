@@ -1,10 +1,13 @@
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
 import L from "leaflet";
-import { Map, TileLayer } from "react-leaflet";
+import userLocation from "./marker.png";
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(
+    ">REV002096113686+1101831-0748084000022732;ID=SyrusG4<"
+  );
   const [date, setDate] = useState("");
 
   const [color, setColor] = useState("black");
@@ -25,7 +28,8 @@ function App() {
     const numWeeks = parseInt(dummy.substring(6, 10));
     const numSeconds = parseInt(dummy.substring(11, 16));
     const numWeeksMilli = numWeeks * 7 * 24 * 60 * 60 * 1000;
-    const time = numSeconds * 1000 + numWeeksMilli + janTimeMilli;
+    const dateWeek = parseInt(dummy.substring(10, 11)) * 24 * 60 * 60 * 1000;
+    const time = numSeconds * 1000 + numWeeksMilli + janTimeMilli + dateWeek;
     const time1 = new Date(time).toString();
     setDate(time1);
   };
@@ -43,7 +47,7 @@ function App() {
   }, [message]);
 
   const getInfo = () => {
-    fetch("http://0590b5fc.ngrok.io/coords")
+    fetch("http://62d959f7.ngrok.io/coords")
       .then(res => res.json())
       .then(data => {
         if (message !== data) {
@@ -56,15 +60,32 @@ function App() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vw" }}>
       <div style={{ color: color, fontWeight: "bolder" }}>{message}</div>
-      <div style={{ color: color, fontWeight: "bolder" }}>Lati: {latitud}</div>
-      <div style={{ color: color, fontWeight: "bolder" }}>Long: {longitud}</div>
-      <div style={{ color: color, fontWeight: "bolder" }}>Fecha: {date}</div>
+      <div style={{ color: color, fontWeight: "bolder" }}>
+        Latitud: {latitud}
+      </div>
+      <div style={{ color: color, fontWeight: "bolder" }}>
+        Longitud: {longitud}
+      </div>
+      <div style={{ color: color, fontWeight: "bolder" }}>
+        Fecha y Hora: {date}
+      </div>
       <div className="dive">
-        <Map className="map" center={[11.018946, -74.850515]} zoom={15}>
+        <Map className="map" center={[latitud, longitud]} zoom={15}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          <Marker
+            position={[latitud, longitud]}
+            icon={L.icon({
+              iconUrl: userLocation,
+              iconSize: [40, 40]
+            })}
+          >
+            <Popup>
+              Latitud: {latitud} <br /> Longitud: {longitud}
+            </Popup>
+          </Marker>
         </Map>
       </div>
     </div>
