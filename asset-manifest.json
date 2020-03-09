@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Diseno-Electronico/static/css/main.3a1dce21.chunk.css",
-    "main.js": "/Diseno-Electronico/static/js/main.7233890d.chunk.js",
-    "main.js.map": "/Diseno-Electronico/static/js/main.7233890d.chunk.js.map",
+    "main.js": "/Diseno-Electronico/static/js/main.2e357174.chunk.js",
+    "main.js.map": "/Diseno-Electronico/static/js/main.2e357174.chunk.js.map",
     "runtime-main.js": "/Diseno-Electronico/static/js/runtime-main.14789d3c.js",
     "runtime-main.js.map": "/Diseno-Electronico/static/js/runtime-main.14789d3c.js.map",
     "static/css/2.7f75bbe2.chunk.css": "/Diseno-Electronico/static/css/2.7f75bbe2.chunk.css",
     "static/js/2.ad622bba.chunk.js": "/Diseno-Electronico/static/js/2.ad622bba.chunk.js",
     "static/js/2.ad622bba.chunk.js.map": "/Diseno-Electronico/static/js/2.ad622bba.chunk.js.map",
     "index.html": "/Diseno-Electronico/index.html",
-    "precache-manifest.fc9d62c5475ab9af6f9a292883c70181.js": "/Diseno-Electronico/precache-manifest.fc9d62c5475ab9af6f9a292883c70181.js",
+    "precache-manifest.e6de5a0df13ced4594bb2e8760552fd9.js": "/Diseno-Electronico/precache-manifest.e6de5a0df13ced4594bb2e8760552fd9.js",
     "service-worker.js": "/Diseno-Electronico/service-worker.js",
     "static/css/2.7f75bbe2.chunk.css.map": "/Diseno-Electronico/static/css/2.7f75bbe2.chunk.css.map",
     "static/css/main.3a1dce21.chunk.css.map": "/Diseno-Electronico/static/css/main.3a1dce21.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.7f75bbe2.chunk.css",
     "static/js/2.ad622bba.chunk.js",
     "static/css/main.3a1dce21.chunk.css",
-    "static/js/main.7233890d.chunk.js"
+    "static/js/main.2e357174.chunk.js"
   ]
 }
