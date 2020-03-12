@@ -47,7 +47,7 @@ function App() {
   }, [message]);
 
   const getInfo = () => {
-    fetch("http://62d959f7.ngrok.io/coords")
+    fetch("http://bdd24ce8.ngrok.io/coords")
       .then(res => res.json())
       .then(data => {
         if (message !== data) {
@@ -70,7 +70,7 @@ function App() {
         Fecha y Hora: {date}
       </div>
       <div className="dive">
-        <Map className="map" center={[latitud, longitud]} zoom={15}>
+        <Map className="map" center={[latitud, longitud]}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
