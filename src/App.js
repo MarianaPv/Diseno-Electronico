@@ -3,6 +3,8 @@ import "./App.css";
 import L from "leaflet";
 import userLocation from "./marker.png";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import Navigation from "./Components/Navigation/Navigation.js";
+import Table from "./Components/Table/Table.js";
 
 function App() {
   const [message, setMessage] = useState(
@@ -11,7 +13,6 @@ function App() {
 
   const [historic, setHistoric] = useState([]);
   const [zoom, setZoom] = useState(15);
-
   const [color, setColor] = useState("black");
 
   useEffect(() => {
@@ -23,19 +24,20 @@ function App() {
 
   useEffect(() => {
     setColor(color === "blue" ? "black" : "blue");
+    console.log(historic);
   }, [historic]);
 
   const getInfo = () => {
     fetch("http://localhost:5000/coords")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         let { data1 } = data;
 
         if (historic.toString() !== data1.toString()) {
           setHistoric(data1);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -43,9 +45,10 @@ function App() {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vw"
+        height: "100vw",
       }}
     >
+      <Navigation />
       <div style={{ color: color, fontWeight: "bolder" }}>{message}</div>
       <div style={{ color: color, fontWeight: "bolder" }}>
         Latitud: {historic.length > 0 && historic[historic.length - 1].latitud}
@@ -58,15 +61,18 @@ function App() {
         Fecha y Hora:{" "}
         {historic.length > 0 && historic[historic.length - 1].date}
       </div>
+      <button type="button" className="histo-btn">
+        Mostrar históricos
+      </button>
       <div className="dive">
         <Map
           className="map"
           center={[
             historic.length > 0 && historic[historic.length - 1].latitud,
-            historic.length > 0 && historic[historic.length - 1].longitud
+            historic.length > 0 && historic[historic.length - 1].longitud,
           ]}
           zoom={zoom}
-          onZoomEnd={e => {
+          onZoomEnd={(e) => {
             setZoom(e.target._zoom);
           }}
         >
@@ -77,11 +83,11 @@ function App() {
           <Marker
             position={[
               historic.length > 0 && historic[historic.length - 1].latitud,
-              historic.length > 0 && historic[historic.length - 1].longitud
+              historic.length > 0 && historic[historic.length - 1].longitud,
             ]}
             icon={L.icon({
               iconUrl: userLocation,
-              iconSize: [40, 40]
+              iconSize: [40, 40],
             })}
           >
             <Popup>

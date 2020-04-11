@@ -11,10 +11,13 @@
     "dgram": "^1.0.1",
     "express": "^4.17.1",
     "leaflet": "^1.6.0",
-    "react": "^16.12.0",
+    "react": "^16.13.1",
     "react-dom": "^16.12.0",
     "react-leaflet": "^2.6.1",
-    "react-scripts": "3.4.0"
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.0",
+    "react-table": "^7.0.4",
+    "table": "^5.4.6"
   },
   "scripts": {
     "start": "react-scripts start",
