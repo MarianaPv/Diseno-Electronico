@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect, useRef } from "react";
 import "./App.css";
 import L from "leaflet";
 import userLocation from "./marker.png";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import Navigation from "./Components/Navigation/Navigation.js";
 import Table from "./Components/Table/Table.js";
 
@@ -14,7 +14,7 @@ function App() {
   const [historic, setHistoric] = useState([]);
   const [zoom, setZoom] = useState(15);
   const [color, setColor] = useState("black");
-
+  const [dateNow, setDateNow] = useState(new Date(Date.now()).getTime());
   useEffect(() => {
     getInfo();
     setInterval(() => {
@@ -24,7 +24,6 @@ function App() {
 
   useEffect(() => {
     setColor(color === "blue" ? "black" : "blue");
-    console.log(historic);
   }, [historic]);
 
   const getInfo = () => {
@@ -61,9 +60,7 @@ function App() {
         Fecha y Hora:{" "}
         {historic.length > 0 && historic[historic.length - 1].date}
       </div>
-      <button type="button" className="histo-btn">
-        Mostrar históricos
-      </button>
+
       <div className="dive">
         <Map
           className="map"
@@ -90,6 +87,17 @@ function App() {
               iconSize: [40, 40],
             })}
           >
+            <Polyline
+              positions={
+                historic.length > 0 && [
+                  historic
+                    .filter((ele) => dateNow < new Date(ele.date).getTime())
+                    .map((ele) => {
+                      return [ele.latitud, ele.longitud];
+                    }),
+                ]
+              }
+            />
             <Popup>
               Latitud:{" "}
               {historic.length > 0 && historic[historic.length - 1].latitud}{" "}
