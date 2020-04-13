@@ -16,6 +16,7 @@ function Historicos() {
   const [secondTime, setSecondTime] = useState(0);
   const [historic, setHistoric] = useState([]);
   const [filterHistoric, setFilterHistoric] = useState([]);
+  const [zoom, setZoom] = useState(15);
 
   useEffect(() => {
     getInfo();
@@ -39,12 +40,13 @@ function Historicos() {
     let arrayDate = historic.filter((ele) => {
       console.log(
         lowerDateRange + firstTime,
-        upperDateRange + secondTime,
+        upperDateRange - 24 * 60 * 1000 + secondTime,
         new Date(ele.date).getTime()
       );
       return (
         new Date(ele.date).getTime() >= lowerDateRange + firstTime &&
-        new Date(ele.date).getTime() <= upperDateRange + secondTime
+        new Date(ele.date).getTime() <=
+          upperDateRange - 24 * 3600 * 1000 + 1000 + secondTime
       );
     });
 
@@ -58,15 +60,19 @@ function Historicos() {
   };
 
   const timeOutput = (time) => {
-    let msArray = time.format("HH:mm").split(":");
-    let ms = (msArray[0] * 3600 + msArray[1] * 60) * 1000;
-    setFirstTime(ms);
+    if (time !== null) {
+      let msArray = time.format("HH:mm").split(":");
+      let ms = (msArray[0] * 3600 + msArray[1] * 60) * 1000;
+      setFirstTime(ms);
+    }
   };
 
   const timeOutput1 = (time) => {
-    let msArray = time.format("HH:mm").split(":");
-    let ms = (msArray[0] * 3600 + msArray[1] * 60) * 1000;
-    setSecondTime(ms);
+    if (time !== null) {
+      let msArray = time.format("HH:mm").split(":");
+      let ms = (msArray[0] * 3600 + msArray[1] * 60) * 1000;
+      setSecondTime(ms);
+    }
   };
 
   return (
@@ -86,7 +92,14 @@ function Historicos() {
           handleFilter={handleFilter}
         />
 
-        <Map className="map" center={[11.01931, -74.8084]} zoom={20}>
+        <Map
+          className="map"
+          center={[11.01931, -74.8084]}
+          zoom={zoom}
+          onZoomEnd={(e) => {
+            setZoom(e.target._zoom);
+          }}
+        >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
