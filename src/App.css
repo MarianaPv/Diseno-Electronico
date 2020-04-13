@@ -3,31 +3,22 @@
   height: 100%;
 }
 
-.histo-btn {
+.claseUno {
   position: relative;
   display: flex;
-  /* background-color: #417cef; */
-  border: 0;
-  border-radius: 2px;
-  border: 1px solid #417cef;
-  font-size: 14px;
-  height: 4%;
-  width: 8.5%;
-  font-family: Oxygen, sans-serif;
-  background-color: rgba(15, 15, 15, 0.03);
-  margin-left: 0px;
-  margin-top: 3vw;
-  transition: background-color 0.3s ease-out;
-  cursor: pointer;
+  flex-direction: column;
+  height: 10%;
+  margin-left: 5vw;
 }
+
 .map {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 55%;
   width: 70%;
-  margin-left: 15vw;
-  margin-top: 6vw;
+  margin-left: 30vw;
+  margin-top: 10vw;
 }
 
 .dive {

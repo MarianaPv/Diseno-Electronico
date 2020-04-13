@@ -4,7 +4,7 @@
   font-family: sans-serif;
   display: flex;
   flex-direction: row;
-  height: 13%;
+  height: 10%;
   width: 100%;
 }
 
@@ -28,7 +28,7 @@ header {
 
 ul {
   position: relative;
-  margin-left: 3.5vw;
+  margin-left: 2vw;
   margin-top: 0vh;
   padding: 0;
   display: flex;

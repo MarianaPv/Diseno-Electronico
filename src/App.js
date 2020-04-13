@@ -4,7 +4,6 @@ import L from "leaflet";
 import userLocation from "./marker.png";
 import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import Navigation from "./Components/Navigation/Navigation.js";
-import Table from "./Components/Table/Table.js";
 
 function App() {
   const [message, setMessage] = useState(
@@ -15,15 +14,20 @@ function App() {
   const [zoom, setZoom] = useState(15);
   const [color, setColor] = useState("black");
   const [dateNow, setDateNow] = useState(new Date(Date.now()).getTime());
+
   useEffect(() => {
     getInfo();
-    setInterval(() => {
+    const timer = setInterval(() => {
       getInfo();
     }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
     setColor(color === "blue" ? "black" : "blue");
+    console.log(historic);
   }, [historic]);
 
   const getInfo = () => {
@@ -48,19 +52,21 @@ function App() {
       }}
     >
       <Navigation />
-      <div style={{ color: color, fontWeight: "bolder" }}>{message}</div>
-      <div style={{ color: color, fontWeight: "bolder" }}>
-        Latitud: {historic.length > 0 && historic[historic.length - 1].latitud}
+      <div className="claseUno">
+        <div style={{ color: color, fontWeight: "bolder" }}>{message}</div>
+        <div style={{ color: color, fontWeight: "bolder" }}>
+          Latitud:{" "}
+          {historic.length > 0 && historic[historic.length - 1].latitud}
+        </div>
+        <div style={{ color: color, fontWeight: "bolder" }}>
+          Longitud:{" "}
+          {historic.length > 0 && historic[historic.length - 1].longitud}
+        </div>
+        <div style={{ color: color, fontWeight: "bolder" }}>
+          Fecha y Hora:{" "}
+          {historic.length > 0 && historic[historic.length - 1].date}
+        </div>
       </div>
-      <div style={{ color: color, fontWeight: "bolder" }}>
-        Longitud:{" "}
-        {historic.length > 0 && historic[historic.length - 1].longitud}
-      </div>
-      <div style={{ color: color, fontWeight: "bolder" }}>
-        Fecha y Hora:{" "}
-        {historic.length > 0 && historic[historic.length - 1].date}
-      </div>
-
       <div className="dive">
         <Map
           className="map"
