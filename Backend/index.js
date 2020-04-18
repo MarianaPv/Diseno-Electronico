@@ -8,7 +8,7 @@ const cors = require("cors");
 const SELECT_ALL_TRUCKS = "SELECT * FROM camiones";
 
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: "camiones.cegoasvw0wpw.us-east-1.rds.amazonaws.com",
   user: "root",
   database: "camiones",
   password: "password",
@@ -88,7 +88,7 @@ app.get("/mobile", (req, res) => {
   res.send("hello moto");
 });
 
-app.listen(5000, () => {
-  console.log("Listening on Port 5000");
+app.listen(5010, () => {
+  console.log("Listening on Port 5010");
 });
-server.bind(5000);
+server.bind(5010);

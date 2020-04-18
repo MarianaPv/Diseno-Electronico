@@ -38,11 +38,6 @@ function Historicos() {
   const handleFilter = () => {
     console.log("clic");
     let arrayDate = historic.filter((ele) => {
-      console.log(
-        lowerDateRange + firstTime,
-        upperDateRange - 24 * 60 * 1000 + secondTime,
-        new Date(ele.date).getTime()
-      );
       return (
         new Date(ele.date).getTime() >= lowerDateRange + firstTime &&
         new Date(ele.date).getTime() <=

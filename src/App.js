@@ -31,7 +31,7 @@ function App() {
   }, [historic]);
 
   const getInfo = () => {
-    fetch("http://localhost:5000/coords")
+    fetch("http://ec2-54-172-1-171.compute-1.amazonaws.com:5000/coords")
       .then((res) => res.json())
       .then((data) => {
         let { data1 } = data;

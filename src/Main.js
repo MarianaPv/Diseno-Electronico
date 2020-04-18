@@ -4,8 +4,10 @@ import Historicos from "./Components/Historicos/Historicos";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import * as ROUTES from "./Routes/Routes";
 
+
 function Main() {
   return (
+      
     <Router>
       <div>
         <Switch>
