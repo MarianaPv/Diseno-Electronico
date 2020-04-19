@@ -88,7 +88,7 @@ app.get("/mobile", (req, res) => {
   res.send("hello moto");
 });
 
-app.listen(5010, () => {
+app.listen(5000, () => {
   console.log("Listening on Port 5010");
 });
 server.bind(5010);
