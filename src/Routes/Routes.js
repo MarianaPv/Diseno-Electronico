@@ -1,2 +1,2 @@
-export const HOME = "/Diseno-Electronico";
+export const HOME = "/";
 export const HISTORICOS = "/historicos";

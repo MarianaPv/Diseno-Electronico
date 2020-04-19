@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^7.2.1",
     "cors": "^2.8.5",
     "dgram": "^1.0.1",
+    "proxy": "http://ec2-54-172-1-171.compute-1.amazonaws.com",
+    "aws-sdk": "latest",
     "express": "^4.17.1",
     "leaflet": "^1.6.0",
     "rc-time-picker": "^3.7.3",
