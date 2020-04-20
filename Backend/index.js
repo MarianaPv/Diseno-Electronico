@@ -84,8 +84,27 @@ app.get("/coords", (req, res) => {
   });
 });
 
-app.get("/mobile", (req, res) => {
-  res.send("hello moto");
+app.use(express.json());
+app.post("/mobile", (request, response) => {
+  console.log("llego un mensaje");
+  console.log(request.body);
+  var msg1 = request.body;
+  var lat = request.body.latitud;
+  var lon = request.body.longitud;
+  var timestamp = parseInt(request.body.timestamp) - 3600 * 5 * 1000;
+  var datete = new Date(timestamp * 1);
+  var hours = datete.getHours();
+  var minutes = "0" + datete.getMinutes();
+  var seconds = "0" + datete.getSeconds();
+  var tiemporeal = hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
+  const time2 = new Date(timestamp);
+  console.log(lat, lon, time2);
+  connection.query(`INSERT INTO camiones (latitud, longitud, date)
+  VALUES ('${lat}', '${lon}', '${time2}')
+  `);
+  response.json({
+    status: "listo pah",
+  });
 });
 
 app.listen(5000, () => {
