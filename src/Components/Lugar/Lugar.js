@@ -58,6 +58,9 @@ function Lugar() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
         </Map>
+        <button className="butClass" style={{ height: "7vh" }}>
+          Filtrar
+        </button>
       </div>
     </div>
   );
