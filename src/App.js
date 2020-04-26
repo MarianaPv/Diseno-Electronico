@@ -19,7 +19,7 @@ function App() {
     getInfo();
     const timer = setInterval(() => {
       getInfo();
-    }, 1000);
+    }, 10000);
     return () => {
       clearInterval(timer);
     };

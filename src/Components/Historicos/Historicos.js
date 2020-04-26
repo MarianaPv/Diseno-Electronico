@@ -1,27 +1,33 @@
 import React, { useEffect, useState, useRef } from "react";
 import Navigation from "../Navigation/Navigation.js";
 import FilterC from "../Calendario/FilterC.js";
-import TimePicker from "rc-time-picker";
+
 import "rc-time-picker/assets/index.css";
 import "react-calendar/dist/Calendar.css";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import L from "leaflet";
 import "./Historicos.css";
 import userLocation from "../../marker.png";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
 
 function Historicos() {
-  const [lowerDateRange, setLowerDateRange] = useState(0);
-  const [upperDateRange, setUpperDateRange] = useState(0);
-  const [firstTime, setFirstTime] = useState(0);
-  const [secondTime, setSecondTime] = useState(0);
+  const [lowerDateRange, setLowerDateRange] = useState(new Date());
+  const [upperDateRange, setUpperDateRange] = useState(new Date());
+
   const [historic, setHistoric] = useState([]);
   const [filterHistoric, setFilterHistoric] = useState([]);
   const [zoom, setZoom] = useState(15);
+  const [valueSlider, setValueSlider] = useState(0);
 
   useEffect(() => {
     getInfo();
   }, []);
-
+  useEffect(() => {
+    console.log(filterHistoric);
+  }, [filterHistoric]);
   const getInfo = () => {
     fetch("http://ec2-54-172-1-171.compute-1.amazonaws.com:5000/coords")
       .then((res) => res.json())
@@ -36,38 +42,30 @@ function Historicos() {
   };
 
   const handleFilter = () => {
-    console.log("clic");
-    let arrayDate = historic.filter((ele) => {
-      return (
-        new Date(ele.date).getTime() >= lowerDateRange + firstTime &&
-        new Date(ele.date).getTime() <=
-          upperDateRange - 24 * 3600 * 1000 + 1000 + secondTime
-      );
-    });
+    if (lowerDateRange < upperDateRange) {
+      let arrayDate = historic.filter((ele) => {
+        return (
+          new Date(ele.date).getTime() >= lowerDateRange &&
+          new Date(ele.date).getTime() <= upperDateRange
+        );
+      });
 
-    setFilterHistoric(arrayDate);
+      setFilterHistoric(arrayDate);
+    } else {
+      alert("¡La fecha inicial tiene que ser menor que la final!");
+    }
   };
 
   const dateOutput = (date) => {
-    console.log(date);
-    setLowerDateRange(new Date(date[0]).getTime());
-    setUpperDateRange(new Date(date[1]).getTime());
+    setLowerDateRange(new Date(date).getTime() - 5 * 60 * 60 * 1000);
   };
 
-  const timeOutput = (time) => {
-    if (time !== null) {
-      let msArray = time.format("HH:mm").split(":");
-      let ms = (msArray[0] * 3600 + msArray[1] * 60) * 1000;
-      setFirstTime(ms);
-    }
+  const dateOutput1 = (date) => {
+    setUpperDateRange(new Date(date).getTime() - 5 * 60 * 60 * 1000);
   };
 
-  const timeOutput1 = (time) => {
-    if (time !== null) {
-      let msArray = time.format("HH:mm").split(":");
-      let ms = (msArray[0] * 3600 + msArray[1] * 60) * 1000;
-      setSecondTime(ms);
-    }
+  const valueText = (value) => {
+    setValueSlider(value);
   };
 
   return (
@@ -75,52 +73,81 @@ function Historicos() {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vw",
+        height: "87vh",
+        width: "100vw",
       }}
     >
       <Navigation />
       <div className="dive">
         <FilterC
           dateOutput={dateOutput}
-          timeOutput={timeOutput}
-          timeOutput1={timeOutput1}
+          dateOutput1={dateOutput1}
           handleFilter={handleFilter}
         />
-
-        <Map
-          className="map"
-          center={[11.01931, -74.8084]}
-          zoom={zoom}
-          onZoomEnd={(e) => {
-            setZoom(e.target._zoom);
+        <div
+          style={{
+            display: "flex",
+            height: "87vh",
+            flexDirection: "column",
+            marginLeft: "8.5vw",
           }}
         >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker
-            position={[
-              filterHistoric.length > 0 &&
-                filterHistoric[filterHistoric.length - 1].latitud,
-              filterHistoric.length > 0 &&
-                filterHistoric[filterHistoric.length - 1].longitud,
-            ]}
-            icon={L.icon({
-              iconUrl: userLocation,
-              iconSize: [40, 40],
-            })}
-          ></Marker>
-          <Polyline
-            positions={
-              filterHistoric.length > 0 && [
-                filterHistoric.map((ele) => {
-                  return [ele.latitud, ele.longitud];
-                }),
-              ]
+          <Map
+            className="map1"
+            center={
+              filterHistoric.length > 0
+                ? [
+                    filterHistoric[valueSlider].latitud,
+                    filterHistoric[valueSlider].longitud,
+                  ]
+                : [11.01931, -74.8084]
             }
+            onZoomEnd={(e) => {
+              setZoom(e.target._zoom);
+            }}
+            zoom={zoom}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker
+              position={[
+                filterHistoric.length > 0 &&
+                  filterHistoric[valueSlider].latitud,
+                filterHistoric.length > 0 &&
+                  filterHistoric[valueSlider].longitud,
+              ]}
+              icon={L.icon({
+                iconUrl: userLocation,
+                iconSize: [40, 40],
+              })}
+            ></Marker>
+            <Polyline
+              positions={
+                filterHistoric.length > 0 && [
+                  filterHistoric.map((ele) => {
+                    return [ele.latitud, ele.longitud];
+                  }),
+                ]
+              }
+            />
+          </Map>
+          <Typography id="discrete-slider" gutterBottom>
+            Hello
+          </Typography>
+          <Slider
+            defaultValue={0}
+            getAriaValueText={valueText}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="auto"
+            step={1}
+            marks
+            min={0}
+            max={filterHistoric.length > 0 ? filterHistoric.length - 1 : 1}
           />
-        </Map>
+          {filterHistoric.length > 0 && filterHistoric[valueSlider].date}
+        </div>
       </div>
     </div>
   );

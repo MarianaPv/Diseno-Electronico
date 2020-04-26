@@ -3,13 +3,13 @@
   height: 100%;
 }
 
-.map {
+.map1 {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 50%;
-  width: 46%;
-  margin-left: 3vw;
+  height: 30vh;
+  width: 20%;
+
   margin-right: 1.3vw;
   margin-top: 0vw;
 }
@@ -17,4 +17,23 @@
 .dive {
   display: flex;
   flex-direction: row;
+}
+
+div.map1.leaflet-container.leaflet-retina.leaflet-fade-anim.leaflet-grab.leaflet-touch-drag {
+  height: 70vh;
+  width: 87vw;
+}
+
+div.react-datepicker__time-box {
+  display: flex;
+}
+
+ul.react-datepicker__time-list {
+  flex-direction: column;
+}
+
+span.MuiSlider-root.MuiSlider-colorPrimary {
+  width: 50vw;
+
+  margin-top: 3vh;
 }

@@ -6,7 +6,6 @@ const mysql = require("mysql");
 const cors = require("cors");
 
 const SELECT_ALL_TRUCKS = "SELECT * FROM camiones";
-
 const connection = mysql.createConnection({
   host: "camiones.cegoasvw0wpw.us-east-1.rds.amazonaws.com",
   user: "root",
