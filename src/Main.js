@@ -7,12 +7,11 @@ import * as ROUTES from "./Routes/Routes";
 
 function Main() {
   return (
-    <Router>
+    <Router basename="Diseno-Electronico">
       <div>
         <Switch>
           <Route initial={true} exact path={ROUTES.HOME} component={App} />
           <Route exact path={ROUTES.HISTORICOS} component={Historicos} />
-          <Route exact path={ROUTES.LUGAR} component={Lugar} />
         </Switch>
       </div>
     </Router>

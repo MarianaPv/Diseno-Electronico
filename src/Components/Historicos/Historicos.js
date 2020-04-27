@@ -78,7 +78,7 @@ function Historicos() {
       }}
     >
       <Navigation />
-      <div className="dive">
+      <div className="dive" style={{ backgroundColor: "rgb(224, 229, 240)" }}>
         <FilterC
           dateOutput={dateOutput}
           dateOutput1={dateOutput1}
@@ -89,13 +89,13 @@ function Historicos() {
             display: "flex",
             height: "87vh",
             flexDirection: "column",
-            marginLeft: "8.5vw",
+            marginLeft: "9vw",
           }}
         >
           <Map
             className="map1"
             center={
-              filterHistoric.length > 0
+              filterHistoric.length > 0 && filterHistoric[valueSlider]
                 ? [
                     filterHistoric[valueSlider].latitud,
                     filterHistoric[valueSlider].longitud,
@@ -112,12 +112,15 @@ function Historicos() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <Marker
-              position={[
-                filterHistoric.length > 0 &&
-                  filterHistoric[valueSlider].latitud,
-                filterHistoric.length > 0 &&
-                  filterHistoric[valueSlider].longitud,
-              ]}
+              position={
+                filterHistoric.length > 0 && filterHistoric[valueSlider]
+                  ? [
+                      filterHistoric[valueSlider].latitud,
+
+                      filterHistoric[valueSlider].longitud,
+                    ]
+                  : [20, 20]
+              }
               icon={L.icon({
                 iconUrl: userLocation,
                 iconSize: [40, 40],
@@ -133,9 +136,9 @@ function Historicos() {
               }
             />
           </Map>
-          <Typography id="discrete-slider" gutterBottom>
-            Hello
-          </Typography>
+          <div style={{ textAlign: "center" }}>
+            Desliza para conocer más detalles de tu ubicación.
+          </div>
           <Slider
             defaultValue={0}
             getAriaValueText={valueText}
@@ -146,7 +149,15 @@ function Historicos() {
             min={0}
             max={filterHistoric.length > 0 ? filterHistoric.length - 1 : 1}
           />
-          {filterHistoric.length > 0 && filterHistoric[valueSlider].date}
+
+          <div style={{ textAlign: "center" }}>
+            {filterHistoric.length > 0 &&
+              filterHistoric[valueSlider] &&
+              filterHistoric[valueSlider].date.slice(
+                0,
+                filterHistoric[valueSlider].date.search("G")
+              )}
+          </div>
         </div>
       </div>
     </div>

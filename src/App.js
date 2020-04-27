@@ -4,6 +4,7 @@ import L from "leaflet";
 import userLocation from "./marker.png";
 import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import Navigation from "./Components/Navigation/Navigation.js";
+import Welcome from "./Components/Welcome/Welcome.js";
 
 function App() {
   const [message, setMessage] = useState(
@@ -14,6 +15,7 @@ function App() {
   const [zoom, setZoom] = useState(15);
   const [color, setColor] = useState("black");
   const [dateNow, setDateNow] = useState(new Date(Date.now()).getTime());
+  const [welcomeParty, setWelcomeParty] = useState(true);
 
   useEffect(() => {
     getInfo();
@@ -26,7 +28,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setColor(color === "blue" ? "black" : "blue");
+    setColor(color === "blue" ? "black" : "red");
     console.log(historic);
   }, [historic]);
 
@@ -42,76 +44,102 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
-
+  const welcomeChange = () => {
+    setWelcomeParty(false);
+  };
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         height: "100vw",
+        overflowY: "hidden",
       }}
     >
-      <Navigation />
-      <div className="claseUno">
-        <div style={{ color: color, fontWeight: "bolder" }}>{message}</div>
-        <div style={{ color: color, fontWeight: "bolder" }}>
-          Latitud:{" "}
-          {historic.length > 0 && historic[historic.length - 1].latitud}
-        </div>
-        <div style={{ color: color, fontWeight: "bolder" }}>
-          Longitud:{" "}
-          {historic.length > 0 && historic[historic.length - 1].longitud}
-        </div>
-        <div style={{ color: color, fontWeight: "bolder" }}>
-          Fecha y Hora:{" "}
-          {historic.length > 0 && historic[historic.length - 1].date}
-        </div>
+      <div style={{ filter: welcomeParty ? "blur(1.5px)" : "blur(0px)" }}>
+        <Navigation />
       </div>
-      <div className="dive">
-        <Map
-          className="map"
-          center={[
-            historic.length > 0 && historic[historic.length - 1].latitud,
-            historic.length > 0 && historic[historic.length - 1].longitud,
-          ]}
-          zoom={zoom}
-          onZoomEnd={(e) => {
-            setZoom(e.target._zoom);
-          }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker
-            position={[
+      {welcomeParty && <Welcome welcomeChange={welcomeChange} />}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          height: "100%",
+          filter: welcomeParty ? "blur(1.6px)" : "blur(0px)",
+          backgroundColor: "rgb(224, 229, 240)",
+        }}
+      >
+        <div className="claseUno">
+          <div
+            style={{ color: "black", fontWeight: "bolder", fontSize: "20px" }}
+          >
+            Los datos actuales de tu producto son:
+          </div>
+          <table className="tableClosed">
+            <tr>
+              <th>Latitud</th>
+              <th>Longitud</th>
+              <th>Fecha y Hora</th>
+            </tr>
+            <tr>
+              <td>
+                {historic.length > 0 && historic[historic.length - 1].latitud}
+              </td>
+              <td>
+                {historic.length > 0 && historic[historic.length - 1].longitud}
+              </td>
+              <td>
+                {historic.length > 0 && historic[historic.length - 1].date}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div className="dive1">
+          <Map
+            className="map"
+            center={[
               historic.length > 0 && historic[historic.length - 1].latitud,
               historic.length > 0 && historic[historic.length - 1].longitud,
             ]}
-            icon={L.icon({
-              iconUrl: userLocation,
-              iconSize: [40, 40],
-            })}
+            zoom={zoom}
+            onZoomEnd={(e) => {
+              setZoom(e.target._zoom);
+            }}
           >
-            <Polyline
-              positions={
-                historic.length > 0 && [
-                  historic
-                    .filter((ele) => dateNow < new Date(ele.date).getTime())
-                    .map((ele) => {
-                      return [ele.latitud, ele.longitud];
-                    }),
-                ]
-              }
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Popup>
-              Latitud:{" "}
-              {historic.length > 0 && historic[historic.length - 1].latitud}{" "}
-              <br /> Longitud:{" "}
-              {historic.length > 0 && historic[historic.length - 1].longitud}
-            </Popup>
-          </Marker>
-        </Map>
+            <Marker
+              position={[
+                historic.length > 0 && historic[historic.length - 1].latitud,
+                historic.length > 0 && historic[historic.length - 1].longitud,
+              ]}
+              icon={L.icon({
+                iconUrl: userLocation,
+                iconSize: [40, 40],
+              })}
+            >
+              <Polyline
+                positions={
+                  historic.length > 0 && [
+                    historic
+                      .filter((ele) => dateNow < new Date(ele.date).getTime())
+                      .map((ele) => {
+                        return [ele.latitud, ele.longitud];
+                      }),
+                  ]
+                }
+              />
+              <Popup>
+                Latitud:{" "}
+                {historic.length > 0 && historic[historic.length - 1].latitud}{" "}
+                <br /> Longitud:{" "}
+                {historic.length > 0 && historic[historic.length - 1].longitud}
+              </Popup>
+            </Marker>
+          </Map>
+        </div>
       </div>
     </div>
   );

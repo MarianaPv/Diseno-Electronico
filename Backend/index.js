@@ -86,11 +86,10 @@ app.get("/coords", (req, res) => {
 app.use(express.json());
 app.post("/mobile", (request, response) => {
   console.log("llego un mensaje");
+  console.log(request.body);
   var msg1 = request.body;
   var lat = request.body.latitud;
-  var lati = lat.substring(0, 3) + "." + lat.substring(3, 9);
   var lon = request.body.longitud;
-  var longi = lon.substring(0, 3) + "." + lon.substring(3, 9);
   var timestamp = parseInt(request.body.timestamp) - 3600 * 5 * 1000;
   var datete = new Date(timestamp * 1);
   var hours = datete.getHours();
@@ -98,9 +97,9 @@ app.post("/mobile", (request, response) => {
   var seconds = "0" + datete.getSeconds();
   var tiemporeal = hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
   const time2 = new Date(timestamp);
-  console.log(lati, longi, time2);
+  console.log(lat, lon, time2);
   connection.query(`INSERT INTO camiones (latitud, longitud, date)
-  VALUES ('${lati}', '${longi}', '${time2}')
+  VALUES ('${lat}', '${lon}', '${time2}')
   `);
   response.json({
     status: "listo pah",

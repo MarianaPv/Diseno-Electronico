@@ -21,8 +21,8 @@ header {
   width: 100vw;
   height: 13vh;
   box-sizing: border-box;
-  background: rgba(248, 245, 245, 0.8);
-
+  background: #121b26;
+  color: #fff;
   transition: 0.5s;
 }
 
@@ -47,21 +47,19 @@ ul li a {
   margin: 3.2vh 0;
   text-transform: uppercase;
   text-decoration: none;
-  color: #262626;
-  font-weight: bold;
+  color: rgb(215, 217, 221);
   transition: 0.5s;
 }
 ul li a:hover {
-  background: #b22222;
   color: #fff;
 }
 
 .logout {
   height: 7vh;
-  width: 3.5vw;
+  width: 11vw;
 
   padding: 3vh 0vw;
-  margin-left: 87vw;
+  margin-left: 77vw;
   display: block;
   flex-direction: row;
   -webkit-transition: all 0.5s ease-out;

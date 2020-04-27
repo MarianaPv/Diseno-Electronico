@@ -21,11 +21,9 @@ function Navigation(props) {
               <li>
                 <Link to={ROUTES.HISTORICOS}>Históricos</Link>
               </li>
-              <li>
-                <Link to={ROUTES.LUGAR}>Históricos por Lugar</Link>
-              </li>
             </ul>
           </div>
+          <input className="logout" type="image" src="logo diseño.png" />
         </header>
       </section>
     </div>

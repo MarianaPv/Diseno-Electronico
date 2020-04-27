@@ -16,13 +16,20 @@
 .butClass {
   position: relative;
   height: 5vh;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Roboto";
   font-size: 13px;
-  background-color: rgb(184, 184, 184);
+  background-color: #121b26;
+  color: white;
   border-radius: 10px;
-  transition: 0.5s;
+
   top: 4.5vh;
   left: 5vw;
   margin-left: 0vw;
   font-weight: bold;
+  width: 5vw;
+}
+
+.butClass:hover {
+  transition: 0.5s;
+  background-color: #3b4e66;
 }
